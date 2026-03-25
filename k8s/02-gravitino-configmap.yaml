@@ -36,3 +36,19 @@ data:
   # Credential provider for S3 (set to "s3-token" to use the AWS credentials
   # injected via the aws-credentials Secret)
   GRAVITINO_CREDENTIAL_PROVIDERS: "s3-token"
+
+  # ── OAuth configuration ───────────────────────────────────────────────────
+  # The signing key and client secret live in the oauth-credentials Secret.
+  # These non-sensitive values are safe to keep in the ConfigMap.
+  #
+  # OAUTH_AUDIENCE    : the "aud" claim expected in every JWT. Must match the
+  #                     value configured in the OAuth token server.
+  # OAUTH_TOKEN_PATH  : URL path on the OAuth server that issues tokens.
+  # OAUTH_SERVER_URI  : base URL of the OAuth server (in-cluster address).
+  #                     Gravitino advertises this to clients via /iceberg/v1/config
+  #                     so they know where to request tokens.
+  # OAUTH_CLIENT_ID   : client_id that Firebolt / Spark should use.
+  OAUTH_AUDIENCE: "gravitino"
+  OAUTH_TOKEN_PATH: "/oauth/tokens"
+  OAUTH_SERVER_URI: "http://oauth-server.gravitino.svc.cluster.local:8080"
+  OAUTH_CLIENT_ID: "firebolt"
