@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gravitino
+  labels:
+    app.kubernetes.io/name: gravitino
+    app.kubernetes.io/component: iceberg-rest-server

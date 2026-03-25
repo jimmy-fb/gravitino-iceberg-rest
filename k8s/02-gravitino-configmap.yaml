@@ -1,0 +1,38 @@
+# Gravitino Iceberg REST Server configuration.
+#
+# Key settings to update for your environment:
+#   GRAVITINO_URI      - JDBC URL of your Hive Metastore's Thrift endpoint
+#   GRAVITINO_WAREHOUSE - S3 path used as the Iceberg warehouse root
+#   GRAVITINO_S3_REGION - AWS region of your S3 bucket
+#   GRAVITINO_S3_ENDPOINT - S3 endpoint URL (region-specific)
+#
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gravitino-config
+  namespace: gravitino
+data:
+  # Thrift URI of your existing Hive Metastore
+  GRAVITINO_URI: "thrift://hive-metastore:9083"
+
+  # S3 path for the Iceberg warehouse root.
+  # All new Iceberg tables will store data under this prefix.
+  GRAVITINO_WAREHOUSE: "s3://YOUR_BUCKET/iceberg"
+
+  # Use Hive Metastore as the catalog backend
+  GRAVITINO_CATALOG_BACKEND: "hive"
+
+  # Use S3FileIO for all Iceberg data operations
+  GRAVITINO_IO_IMPL: "org.apache.iceberg.aws.s3.S3FileIO"
+
+  # S3 region and endpoint
+  GRAVITINO_S3_REGION: "ap-south-1"
+  GRAVITINO_S3_ENDPOINT: "https://s3.ap-south-1.amazonaws.com"
+
+  # Set to "true" only if your S3-compatible storage requires path-style access
+  # (e.g. MinIO). For AWS S3 keep this "false".
+  GRAVITINO_S3_PATH_STYLE_ACCESS: "false"
+
+  # Credential provider for S3 (set to "s3-token" to use the AWS credentials
+  # injected via the aws-credentials Secret)
+  GRAVITINO_CREDENTIAL_PROVIDERS: "s3-token"

@@ -1,0 +1,8 @@
+# Ignore real key files
+*.pem
+*.key
+kubeconfig.yaml
+
+# Don't commit any local overrides with real credentials
+*-local.yaml
+*-local.sh
