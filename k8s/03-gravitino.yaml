@@ -88,16 +88,16 @@ spec:
                 secretKeyRef:
                   name: oauth-credentials
                   key: OAUTH_SIGN_KEY_B64
+          # Use a TCP probe — the HTTP /config endpoint requires a Bearer token
+          # once OAuth is enabled, so an HTTP probe would always return 401.
           readinessProbe:
-            httpGet:
-              path: /iceberg/v1/config
+            tcpSocket:
               port: 9001
             initialDelaySeconds: 20
             periodSeconds: 10
             failureThreshold: 6
           livenessProbe:
-            httpGet:
-              path: /iceberg/v1/config
+            tcpSocket:
               port: 9001
             initialDelaySeconds: 40
             periodSeconds: 15
